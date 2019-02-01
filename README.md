@@ -1,3 +1,3 @@
 # The-Tech-Academy-SQL-Coding-Projects
 
-SQL Projects highlighting multiple data analyzing techniques.
+SQL Projects highlighting various data analyzing techniques.
