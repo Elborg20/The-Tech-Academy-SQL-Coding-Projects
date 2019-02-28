@@ -245,7 +245,7 @@ INSERT INTO Book_Copies
 	(119,4,3)
 ;
 
-/*-- Query 1 --*/
+/*-- How many copies of the book titled "The Lost Tribe" are owned by the library branch whose name is "Sharpstown"? --*/
 
 SELECT a1.Number_Of_Copies, a2.Branch_Name
 FROM Book_Copies a1
@@ -254,7 +254,7 @@ INNER JOIN Books a3 ON a3.Book_Id = a1.Book_id
 Where a3.book_title = 'The Lost Tribe' and a2.Branch_Name = 'Sharpstown'
 ;
 
-/*-- Query 2 --*/
+/*-- How many copies of the book titled "The Lost Tribe" are owned by each library branch? --*/
 
 SELECT a1.Number_Of_Copies, a2.Branch_Name
 	FROM Book_Copies a1
@@ -263,14 +263,15 @@ SELECT a1.Number_Of_Copies, a2.Branch_Name
 	Where a3.book_title = 'The Lost Tribe'
 ;
 
-/*-- Query 3 --*/
+/*-- Retrieve the names of all borrowers who do not have any books checked out. --*/
 
 Select a1.Name
 From Borrower a1
 left join Book_Loans a2 ON a2.Card_Number = a1.Card_Number
 WHERE a2.card_number is null
 
-/*-- Query 4 --*/
+/*-- For each book that is loaned out from the "Sharpstown" branch and whose DueDate is today, retrieve the book title, 
+the borrower's name, and the borrower's address.--*/
 
 select a2.book_title, a3.Name, a3.B_Address
 FROM book_loans a1
@@ -279,14 +280,14 @@ inner join Borrower a3 on a3.card_number = a1.card_number
 inner join Library_Branch a4 on a4.branch_id = a1.branch_id
 where a4.branch_name = 'Sharpstown' and a1.Date_due = '2018/10/25'
 
-/*-- Query 5 --*/
+/*-- For each library branch, retrieve the branch name and the total number of books loaned out from that branch. --*/
 
 select count(a1.Branch_Id) as 'Book''s Loaned' , a2.Branch_Name as 'Branch Name'
 from book_loans a1
 inner join Library_Branch a2 on a2.branch_id = a1.branch_id
 group by a2.branch_name
 
-/*-- Query 6 --*/
+/*-- Retrieve the names, addresses, and the number of books checked out for all borrowers who have more than five books checked out. --*/
 
 select a2.name as 'Name', a2.b_address as 'Address', count(a1.card_number) as 'Book''s Loaned'
 from Borrower a2
@@ -295,7 +296,8 @@ group by a2.name, a2.B_Address
 having count(a1.card_number) > 5
 order by count(a1.card_number) desc;
 
-/*-- Query 7 --*/
+/*-- For each book authored (or co-authored) by "Stephen King",
+retrieve the title and the number of copies owned by the library branch whose name is "Central". --*/
 
 select a3.Book_Title, a4.Number_Of_Copies
 from book_Copies a4
