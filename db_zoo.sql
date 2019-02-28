@@ -24,3 +24,51 @@ from tbl_specialist a2
 inner join tbl_care a1 on a1.care_specialist = a2.specialist_id
 inner join tbl_species a3 on a3.species_care = a1.care_id
 where a3.species_name = 'penguin'
+
+/*drill 7*/
+
+create DATABASE db_drill7
+
+use db_drill7
+
+create table tbl_employees (
+employee_id INT PRIMARY KEY NOT NULL IDENTITY (1,1),
+employee_fname VARCHAR(50) NOT NULL,
+employee_lname VARCHAR(50) NOT NULL,
+employee_contact varchar(50) NOT NULL
+)
+
+create table tbl_jobs (
+job_id INT PRIMARY KEY NOT NULL IDENTITY (100,1),
+job_desc VARCHAR(50),
+job_employee int NOT NULL CONSTRAINT fk_employee_id references tbl_employees ON UPDATE CASCADE ON DELETE CASCADE,
+)
+
+INSERT INTO tbl_employees
+	(employee_fname, employee_lname, employee_contact)
+	values
+	('Joe','Smith','333-333-1215'),
+	('John','Doe','555-555-1753'),
+	('Craig', 'Stanley','465-321-8721'),
+	('Frank', 'Johnson', '674-215-6433')
+;
+
+INSERT INTO tbl_jobs
+	(job_desc, job_employee)
+	values
+	('Painting', 3),
+	('Sanding', 3),
+	('Construction', 4),
+	('Demolition', 4),
+	('Sanitation', 1),
+	('Supplies', 2),
+	('Admin', 2),
+	('Plumbing', 1)
+;
+
+SELECT * FROM tbl_employees
+SELECT * FROM tbl_jobs
+
+SELECT a1.employee_contact, a2.job_desc
+FROM tbl_employees a1
+INNER JOIN tbl_jobs a2 ON a2.job_employee = a1.employee_id
